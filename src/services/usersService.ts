@@ -6,7 +6,7 @@ import { usersRepository } from "../repositories/usersRepository.js";
 const postPayment = async (user: PaymentInsertData, admin: string) => {
   const { id: userId, isPaid } = user;
   if (admin !== "admin") {
-    throw unauthorizedError("Only accessed by admin");
+    throw unauthorizedError("Somente acessado pelo admin!");
   }
   await validateData.validateHasData(userId, "users", "User");
   await usersRepository.postPayment(userId, isPaid);

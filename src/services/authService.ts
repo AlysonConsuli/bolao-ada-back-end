@@ -18,7 +18,7 @@ const signup = async (userData: UserInsertData) => {
   const name = formats.formatName(username);
   const user = await authRepository.findUserByName(name);
   if (user) {
-    throw conflictError("User already exists!");
+    throw conflictError("Já existe um usuário com esse nome!");
   }
   const hashedPassword: string = bcrypt.hashSync(password, SALT);
   await appRepository.insertData({ name, password: hashedPassword }, "users");
@@ -29,11 +29,11 @@ const signin = async (userData: UserInsertData) => {
   const name = formats.formatName(username);
   const user = await authRepository.findUserByName(name);
   if (!user) {
-    throw notFoundError("User not found!");
+    throw notFoundError("Nenhum usuário encontrado com esse nome!");
   }
   const validatePassword = bcrypt.compareSync(password, user.password);
   if (!validatePassword) {
-    throw unauthorizedError("Incorrect password!");
+    throw unauthorizedError("Senha incorreta!");
   }
   const secretKey = process.env.JWT_SECRET_KEY;
   const token: string = jwt.sign(user, secretKey);
@@ -42,7 +42,7 @@ const signin = async (userData: UserInsertData) => {
 
 const adminlogin = async (userName: string) => {
   if (userName !== "admin") {
-    throw unauthorizedError("Only accessed by admin");
+    throw unauthorizedError("Somente acessado pelo admin!");
   }
 };
 

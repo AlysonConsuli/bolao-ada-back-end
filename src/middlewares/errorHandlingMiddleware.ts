@@ -34,5 +34,7 @@ export const errorHandlingMiddleware = (
   }
 
   console.log(err);
-  res.status(500).send("Internal server error. Refresh the page to try again");
+  res
+    .status(500)
+    .send("Erro do Servidor. Atualize a página para tentar novamente");
 };

@@ -9,7 +9,7 @@ const validateHasData = async (
 ) => {
   const data = (await appRepository.findDataById(id, table)) as AppInsertData;
   if (!data) {
-    throw notFoundError(`${tableTitle} not found!`);
+    throw notFoundError(`${tableTitle} não encontrado!`);
   }
   return data;
 };

@@ -11,7 +11,7 @@ const getGames = async () => {
 const postResult = async (result: ResultInsertData, userName: string) => {
   const { id: gameId, score1, score2 } = result;
   if (userName !== "admin") {
-    throw unauthorizedError("Only accessed by admin");
+    throw unauthorizedError("Somente acessado pelo admin!");
   }
   await validateData.validateHasData(gameId, "games", "Game");
   await gamesRepository.postResult(gameId, score1, score2);

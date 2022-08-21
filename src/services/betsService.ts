@@ -12,19 +12,23 @@ import { formats } from "../utils/formats.js";
 const addBet = async (bet: BetInsertData) => {
   const startCup = formats.endBets();
   if (startCup) {
-    throw unauthorizedError("The cup has already started");
+    throw unauthorizedError(
+      "Não é possível adicionar apostas depois que a copa começou!",
+    );
   }
   const { userId, gameId } = bet;
   const game: any = await validateData.validateHasData(gameId, "games", "Game");
   const user = await appRepository.findDataById(userId, "users");
   if (!user) {
-    throw notFoundError("User not found");
+    throw notFoundError("Nenhum usuário encontrado!");
   }
   if (!user.isPaid) {
-    throw unauthorizedError("You need to pay admin to add bets");
+    throw unauthorizedError(
+      "Você precisa pagar 20 reais ao Alex para poder adicionar apostas!",
+    );
   }
   if (game.score1 !== null || game.score2 !== null) {
-    throw unauthorizedError("Betting time ended for this game");
+    throw unauthorizedError("Tempo de apostas encerrado para esse jogo!");
   }
   const hasBet = await betsRepository.findBetByUserIdAndGameId(userId, gameId);
   const betId = hasBet?.id ? hasBet.id : 0;
@@ -40,7 +44,7 @@ const getBets = async (groupBy: GroupBy, userId: number) => {
 
 const getBetsByUser = async (userId: number) => {
   if (!userId || userId <= 0) {
-    throw unprocessableEntityError("userId must be an integer bigger than 0");
+    throw unprocessableEntityError("userId deve ser maior ou igual a 0");
   }
   await validateData.validateHasData(userId, "users", "User");
   return await betsRepository.getUsersBets(userId);
@@ -48,7 +52,7 @@ const getBetsByUser = async (userId: number) => {
 
 const getBetsByGame = async (gameId: number) => {
   if (!gameId || gameId <= 0) {
-    throw unprocessableEntityError("gameId must be an integer bigger than 0");
+    throw unprocessableEntityError("gameId deve ser maior ou igual a 0");
   }
   await validateData.validateHasData(gameId, "games", "Game");
   return await betsRepository.getBetsByGame(gameId);
