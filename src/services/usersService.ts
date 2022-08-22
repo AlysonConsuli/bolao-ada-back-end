@@ -19,6 +19,7 @@ const getRanking = async () => {
     const user = users.find((user) => user.id === userPoints.userId);
     return { ...user, points: userPoints._sum.points };
   });
+  allUsers.sort(alphabeticalOrder);
   const ranking = allUsers.filter((user) => user.isPaid === true);
 
   let pos = 1;
@@ -38,6 +39,22 @@ const getRanking = async () => {
 const getUsers = async () => {
   const users = await usersRepository.getUsers();
   return users;
+};
+
+const alphabeticalOrder = (a: any, b: any) => {
+  if (a.points === null) {
+    return 1;
+  }
+  if (b.points === null) {
+    return -1;
+  }
+  if (a.points === b.points && a.name > b.name) {
+    return 1;
+  }
+  if (a.points === b.points && a.name < b.name) {
+    return -1;
+  }
+  return 0;
 };
 
 export const usersService = {

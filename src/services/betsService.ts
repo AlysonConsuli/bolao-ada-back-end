@@ -27,9 +27,6 @@ const addBet = async (bet: BetInsertData) => {
       "Você precisa pagar 20 reais ao Alex para poder adicionar apostas!",
     );
   }
-  if (game.score1 !== null || game.score2 !== null) {
-    throw unauthorizedError("Tempo de apostas encerrado para esse jogo!");
-  }
   const hasBet = await betsRepository.findBetByUserIdAndGameId(userId, gameId);
   const betId = hasBet?.id ? hasBet.id : 0;
   await betsRepository.upsertBet(bet, betId);
