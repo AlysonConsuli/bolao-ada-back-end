@@ -11,7 +11,8 @@
     "dev:test": "dotenv -e .env.test nodemon src/server.ts",
     "test": "dotenv -e .env.test prisma migrate reset && cross-env && NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest -- -i",
     "test:int": "dotenv -e .env.test prisma migrate reset && cross-env && NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest -- -i --testPathPattern=tests/integration",
-    "test:unit": "dotenv -e .env.test cross-env NODE_OPTIONS=--experimental-vm-modules jest -- -i --coverage --testPathPattern=tests/unit"
+    "test:unit": "dotenv -e .env.test cross-env NODE_OPTIONS=--experimental-vm-modules jest -- -i --coverage --testPathPattern=tests/unit",
+    "stress": "autocannon -c 1000 -d 30 --renderStatusCodes --latency --warmup [-c 1 -d 2] localhost:5000/games"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
@@ -31,6 +32,7 @@
     "@types/node": "^18.7.1",
     "@types/pg": "^8.6.5",
     "@types/supertest": "^2.0.12",
+    "autocannon": "^7.10.0",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
