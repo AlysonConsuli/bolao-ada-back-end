@@ -30,8 +30,8 @@ const dateObject = (date: any) => {
 };
 
 const endBets = () => {
-  const cupDay = dayjs("2022-11-20 08:00");
-  //const testDay = "2022-11-19 08:00";
+  const cupDay = dayjs("2022-09-24 14:00");
+  //const testDay = "2022-11-20 08:00";
   return dayjs().isAfter(cupDay);
 };
 
