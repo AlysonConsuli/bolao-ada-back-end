@@ -12,7 +12,7 @@
     "test": "dotenv -e .env.test prisma migrate reset && cross-env && NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest -- -i",
     "test:int": "dotenv -e .env.test prisma migrate reset && cross-env && NODE_OPTIONS=--experimental-vm-modules dotenv -e .env.test jest -- -i --testPathPattern=tests/integration",
     "test:unit": "dotenv -e .env.test cross-env NODE_OPTIONS=--experimental-vm-modules jest -- -i --coverage --testPathPattern=tests/unit",
-    "stress": "autocannon -c 1000 -d 30 --renderStatusCodes --latency --warmup [-c 1 -d 2] localhost:5000/games"
+    "stress": "autocannon -c 50 -d 30 --renderStatusCodes --latency --warmup [-c 1 -d 2] https://bolao-ada-api.onrender.com/health"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
