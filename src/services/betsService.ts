@@ -7,15 +7,15 @@ import {
   unauthorizedError,
   unprocessableEntityError,
 } from "../middlewares/errorHandlingMiddleware.js";
-// import { formats } from "../utils/formats.js";
+import { formats } from "../utils/formats.js";
 
 const addBet = async (bet: BetInsertData) => {
-  // const startCup = formats.endBets();
-  // if (startCup) {
-  //   throw unauthorizedError(
-  //     "Não é possível adicionar apostas depois que a copa começou!",
-  //   );
-  // }
+  const startCup = formats.endBets();
+  if (startCup) {
+    throw unauthorizedError(
+      "Não é possível adicionar apostas depois que a copa começou!",
+    );
+  }
   const { userId, gameId } = bet;
   const game: any = await validateData.validateHasData(gameId, "games", "Game");
   const user = await appRepository.findDataById(userId, "users");
